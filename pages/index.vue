@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 class="font-bold mb-6 mt-0 text-center text-3xl">
-            Covid-19 API data (last {{ dataLength }} days)
+            Covid-19 API data (last {{ dataLength }} days info)
         </h1>
 
         <div v-if="!loader">
@@ -142,19 +142,18 @@ export default {
                 this.localData = JSON.parse(
                     localStorage.getItem("localData") || "[]"
                 );
-                console.log("set this.localData", this.localData);
+                //console.log("set this.localData", this.localData);
                 //}, 1000);
             } else {
                 this.localData = JSON.parse(
                     localStorage.getItem("localData") || "[]"
                 );
-                console.log("else this.localData", this.localData);
+                //console.log("else this.localData", this.localData);
             }
         },
     },
     watch: {
         loader(newV) {
-            console.log(newV);
             if (!newV) {
                 this.setData();
             }
@@ -164,6 +163,10 @@ export default {
         if (this.data.length == 0) {
             const dataStore = useDataStore();
             dataStore.fetchData();
+        } else {
+            this.localData = JSON.parse(
+                localStorage.getItem("localData") || "[]"
+            );
         }
 
         this.loginCheck();

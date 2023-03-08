@@ -1,5 +1,19 @@
 import { defineStore } from 'pinia'
 
+interface fetchingData {
+    "date": string,
+    "last_update": string,
+    "confirmed": number,
+    "confirmed_diff": number,
+    "deaths": number,
+    "deaths_diff": number,
+    "recovered": number,
+    "recovered_diff": number,
+    "active": number,
+    "active_diff": number,
+    "fatality_rate": number
+}
+
 export const useDataStore = defineStore({
   id: 'data-store',
   state: () => {
@@ -27,7 +41,7 @@ export const useDataStore = defineStore({
 
 				await fetch(api)
 					.then((response) => response.json())
-					.then(({ data }) => {
+					.then(({data}) => {
 						data.id = Date.now()
 						this.data.push(data)
 					})
