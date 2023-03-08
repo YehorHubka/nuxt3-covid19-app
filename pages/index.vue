@@ -152,6 +152,7 @@ export default {
     },
     watch: {
         loader(newV) {
+            //console.log("loader", newV);
             if (!newV) {
                 this.setData();
             }

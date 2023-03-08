@@ -1,19 +1,5 @@
 import { defineStore } from 'pinia'
 
-interface fetchingData {
-    "date": string,
-    "last_update": string,
-    "confirmed": number,
-    "confirmed_diff": number,
-    "deaths": number,
-    "deaths_diff": number,
-    "recovered": number,
-    "recovered_diff": number,
-    "active": number,
-    "active_diff": number,
-    "fatality_rate": Number
-}
-
 export const useDataStore = defineStore({
   id: 'data-store',
   state: () => {
@@ -26,6 +12,30 @@ export const useDataStore = defineStore({
   actions: {
 	async fetchData() {
 		this.loader = true
+		// let promises = [];
+
+		// for(let i = 1; i <= this.dataLength; i++) {
+		// 	let oneDay = 86400000 * i;
+		// 	let time = new Date().getTime() - oneDay;
+		// 	let date = new Date(time).toLocaleDateString("zh-Hans-CN").split("/");
+		// 	if (date[1].length == 1) date[1] = "0" + date[1];
+		// 	if (date[2].length == 1) date[2] = "0" + date[2];
+			
+		// 	promises.push(await fetch(`https://covid-api.com/api/reports/total?iso=UKR&date=${date.join('-')}`));
+		// }
+
+		// try {
+		// 	Promise.all(promises)
+		// 		.then(responses => Promise.all(responses.map(r => r.json())))
+		// 		.then(result => result.map(( { data } ) => {
+		// 			data.id = Date.now()
+		// 			this.data.push(data)
+		// 		}));
+		// } catch(error) {
+		// 	console.log(error);
+		// } finally {
+		// 	this.loader = false
+		// }
 
 		try {
 			for(let i = 1; i <= this.dataLength; i++) {
