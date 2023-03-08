@@ -11,7 +11,7 @@ interface fetchingData {
     "recovered_diff": number,
     "active": number,
     "active_diff": number,
-    "fatality_rate": number
+    "fatality_rate": Number
 }
 
 export const useDataStore = defineStore({
@@ -41,8 +41,9 @@ export const useDataStore = defineStore({
 
 				await fetch(api)
 					.then((response) => response.json())
-					.then(({data}) => {
+					.then(({ data }) => {
 						data.id = Date.now()
+						//console.log('data', data);
 						this.data.push(data)
 					})
 					.catch((error) => console.log(error));

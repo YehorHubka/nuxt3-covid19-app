@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <div v-if="loader" class="flex justify-center items-center flex-col">
+        <div v-else class="flex justify-center items-center flex-col">
             <img src="@/assets/img/loading.gif" width="40" alt="" />
             <div class="font-bold mt-5 text-xl text-center">
                 There are no data yet. <br />Press "Refresh data" to see a new
@@ -137,13 +137,11 @@ export default {
                 JSON.parse(localStorage.getItem("localData") || "[]").length ==
                 0
             ) {
-                //setTimeout(() => {
                 localStorage.setItem("localData", JSON.stringify(this.data));
                 this.localData = JSON.parse(
                     localStorage.getItem("localData") || "[]"
                 );
                 //console.log("set this.localData", this.localData);
-                //}, 1000);
             } else {
                 this.localData = JSON.parse(
                     localStorage.getItem("localData") || "[]"
