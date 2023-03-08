@@ -1,8 +1,10 @@
 <template>
     <div>
-        <h1 class="font-bold mb-10 mt-0 text-center text-5xl">Home</h1>
+        <h1 class="font-bold mb-6 mt-0 text-center text-3xl">
+            Covid-19 API data (last {{ dataLength }} days)
+        </h1>
 
-        <div v-show="localData.length !== 0">
+        <div v-if="!loader">
             <div class="flex flex-col">
                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
@@ -71,10 +73,7 @@
                 </div>
             </div>
         </div>
-        <div
-            v-if="localData.length == 0"
-            class="flex justify-center items-center flex-col"
-        >
+        <div v-if="loader" class="flex justify-center items-center flex-col">
             <img src="@/assets/img/loading.gif" width="40" alt="" />
             <div class="font-bold mt-5 text-xl text-center">
                 There are no data yet. <br />Press "Refresh data" to see a new
@@ -138,21 +137,26 @@ export default {
                 JSON.parse(localStorage.getItem("localData") || "[]").length ==
                 0
             ) {
-                setTimeout(() => {
-                    localStorage.setItem(
-                        "localData",
-                        JSON.stringify(this.data)
-                    );
-                    this.localData = JSON.parse(
-                        localStorage.getItem("localData") || "[]"
-                    );
-                    console.log("set this.localData", this.localData);
-                }, 1000);
+                //setTimeout(() => {
+                localStorage.setItem("localData", JSON.stringify(this.data));
+                this.localData = JSON.parse(
+                    localStorage.getItem("localData") || "[]"
+                );
+                console.log("set this.localData", this.localData);
+                //}, 1000);
             } else {
                 this.localData = JSON.parse(
                     localStorage.getItem("localData") || "[]"
                 );
                 console.log("else this.localData", this.localData);
+            }
+        },
+    },
+    watch: {
+        loader(newV) {
+            console.log(newV);
+            if (!newV) {
+                this.setData();
             }
         },
     },
@@ -162,12 +166,11 @@ export default {
             dataStore.fetchData();
         }
 
-        this.setData();
         this.loginCheck();
     },
     computed: {
         ...mapState(useAuthStore, ["isAuth"]),
-        ...mapState(useDataStore, ["data"]),
+        ...mapState(useDataStore, ["data", "loader", "dataLength"]),
     },
 };
 </script>
