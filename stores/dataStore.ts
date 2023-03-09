@@ -12,6 +12,7 @@ export const useDataStore = defineStore({
   actions: {
 	async fetchData() {
 		this.loader = true
+		
 		// let promises = [];
 
 		// for(let i = 1; i <= this.dataLength; i++) {

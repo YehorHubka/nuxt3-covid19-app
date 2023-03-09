@@ -1,10 +1,13 @@
 <template>
     <div>
         <h1 class="font-bold mb-6 mt-0 text-center text-3xl">
-            Covid-19 API data (last {{ dataLength }} days info)
+            Covid-19 API data <br />
+            <span class="text-xl font-normal"
+                >(last {{ dataLength }} days info)</span
+            >
         </h1>
 
-        <div v-if="!loader">
+        <div v-if="!loader && localData.length !== 0">
             <div class="flex flex-col">
                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
@@ -76,7 +79,7 @@
         <div v-else class="flex justify-center items-center flex-col">
             <img src="@/assets/img/loading.gif" width="40" alt="" />
             <div class="font-bold mt-5 text-xl text-center">
-                There are no data yet. <br />Press "Refresh data" to see a new
+                There is no data yet. <br />Press "Refresh data" to see a new
                 data.
             </div>
         </div>
@@ -110,12 +113,12 @@ export default {
             auth.onAuthStateChanged((user) => {
                 if (user) {
                     // User is signed in
-                    console.log("User is signed in");
+                    //console.log("User is signed in");
                     store.isAuth = true;
                     this.$router.push("/");
                 } else {
                     // User is signed out
-                    console.log("User is signed out");
+                    //console.log("User is signed out");
                     store.isAuth = false;
                     this.$router.push("/login");
                 }
@@ -163,6 +166,7 @@ export default {
             const dataStore = useDataStore();
             dataStore.fetchData();
         } else {
+            localStorage.setItem("localData", JSON.stringify(this.data));
             this.localData = JSON.parse(
                 localStorage.getItem("localData") || "[]"
             );
